@@ -1,38 +1,113 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  font-family: sans-serif;
+  background: #efefef;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+a {
+  color: initial;
+  text-decoration: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.flex {
   display: flex;
+}
+
+.column {
   flex-direction: column;
+}
+
+.align_center {
   align-items: center;
+}
+
+.justify_center {
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.justify_between {
+  justify-content: space-between;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.pointer {
+  cursor: pointer;
+}
+
+.sideNavMainDiv {
+  width: 15%;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  border-right: 2px solid #c9c9c9;
+  background: #fff;
+}
+
+.routesMainDiv {
+  width: 80%;
+  padding: 1rem 2rem;
+  background: #fff;
+  margin: 2% auto;
+  border-radius: 8px;
+}
+
+.active_menu {
+  background: rgba(189, 217, 248, 0.5);
+  border-right: 2px solid #6d6dff;
+}
+
+.gap05rem {
+  gap: 0.5rem;
+}
+
+.gap1rem {
+  gap: 1rem;
+}
+
+.gap15rem {
+  gap: 1.5rem;
+}
+
+.gap2rem {
+  gap: 2rem;
+}
+
+.font12 {
+  font-size: 12px;
+}
+
+.font14 {
+  font-size: 14px;
+}
+
+.font16 {
+  font-size: 16px;
+}
+
+.font18 {
+  font-size: 18px;
+}
+
+.font120 {
+  font-size: 120px;
+}
+
+.nav_menu {
+  padding: 1rem 0.5rem;
+  height: 100%;
+}
+
+.padding05rem {
+  padding: 0.5rem;
+}
+
+.logout_btn {
+  border: none;
+  background: #6d6dff;
+  border-radius: 8px;
+  color: #fff;
 }
