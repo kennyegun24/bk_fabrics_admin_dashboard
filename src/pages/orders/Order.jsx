@@ -1,25 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useMemo } from "react";
 import { Box, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { ordersRows } from "../../data/tables_data";
-const Order = () => {
+import NoRow from "../../components/NoRow";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useSelector } from "react-redux";
+const Order = ({ setPending }) => {
+  const navigate = useNavigate();
   const columns = useMemo(
     () => [
       {
-        field: "userId",
+        field: "_id",
         headerName: "ID",
         width: 100,
         headerClassName: "super-app-theme--header",
       },
       {
-        field: "first_name",
+        field: "firstName",
         headerName: "First Name",
         width: 150,
         headerClassName: "super-app-theme--header",
       },
       {
-        field: "last_name",
+        field: "lastName",
         headerName: "Last Name",
         width: 150,
         headerClassName: "super-app-theme--header",
@@ -87,9 +92,33 @@ const Order = () => {
     ],
     []
   );
+  const [orders, setOrders] = useState([]);
+  const { currentUser } = useSelector((state) => state.user);
+
+  const TOKEN = currentUser?.access_token;
+  const getOrders = async () => {
+    try {
+      setPending(true);
+      const req = await axios.get("http://localhost:4000/api/orders/all", {
+        headers: {
+          Token: `Bearer ${TOKEN}`,
+        },
+      });
+      const res = await req.data;
+      console.log(res);
+      setOrders(res);
+      setPending(false);
+    } catch (error) {
+      setPending(false);
+    }
+  };
+  useEffect(() => {
+    setPending(true);
+    getOrders();
+  }, []);
+  console.log(orders);
   return (
     <div>
-      {" "}
       <div>
         <Box
           sx={{
@@ -112,12 +141,16 @@ const Order = () => {
           <DataGrid
             rowsPerPageOptions={[2, 4, 5]}
             columns={columns}
-            rows={ordersRows}
-            getRowId={(row) => row.userId}
+            rows={orders}
+            getRowId={(row) => row._id}
             pageSizeOptions={[10, 20, 30]}
             initialState={{
               pagination: { paginationModel: { pageSize: 10 } },
             }}
+            slots={{ noRowsOverlay: NoRow }}
+            sx={{ "--DataGrid-overlayHeight": "300px" }}
+            autoHeight
+            onRowClick={({ row }) => navigate(`/orders/${row._id}`)}
           />
         </Box>
       </div>

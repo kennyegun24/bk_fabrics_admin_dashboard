@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useMemo } from "react";
 import { Box, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { rows } from "../../data/tables_data";
-const Users = () => {
+import NoRow from "../../components/NoRow";
+import axios from "axios";
+import { useSelector } from "react-redux";
+const Users = ({ setPending }) => {
   const columns = useMemo(
     () => [
       {
@@ -42,7 +45,31 @@ const Users = () => {
     ],
     []
   );
+  const [users, setUsers] = useState([]);
+  const { currentUser } = useSelector((state) => state.user);
 
+  const TOKEN = currentUser?.access_token;
+  const getAllUsers = async () => {
+    setPending(true);
+    try {
+      const req = await axios.get(`http://localhost:4000/api/stats`, {
+        headers: {
+          Token: `Bearer ${TOKEN}`,
+        },
+      });
+
+      const res = req.data;
+      setUsers(res || []);
+      setPending(false);
+    } catch (error) {
+      setPending(false);
+      console.error("Error fetching products", error);
+    }
+  };
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
   return (
     <div>
       <Box
@@ -66,12 +93,15 @@ const Users = () => {
         <DataGrid
           rowsPerPageOptions={[2, 4, 5]}
           columns={columns}
-          rows={rows}
+          rows={users}
           getRowId={(row) => row._id}
           pageSizeOptions={[10, 20, 30]}
           initialState={{
             pagination: { paginationModel: { pageSize: 10 } },
           }}
+          slots={{ noRowsOverlay: NoRow }}
+          sx={{ "--DataGrid-overlayHeight": "300px" }}
+          autoHeight
         />
       </Box>
     </div>

@@ -1,125 +1,197 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
-import { BarChart, LineChart } from "@mui/x-charts";
-const Statistics = () => {
+import { BarChart } from "@mui/x-charts";
+import {
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  Line,
+  LineChart,
+  XAxis,
+  YAxis,
+  AreaChart,
+  Area,
+} from "recharts";
+import axios from "axios";
+import { useSelector } from "react-redux";
+
+const Statistics = ({ setPending }) => {
   const chartSetting = {
     xAxis: [
       {
-        label: "rainfall (mm)",
+        label: "Orders",
       },
     ],
     width: 500,
     height: 400,
   };
-  const dataset = [
-    {
-      london: 59,
-      month: "Jan",
-    },
-    {
-      london: 50,
-      month: "Fev",
-    },
-    {
-      london: 47,
-      month: "Mar",
-    },
-    {
-      london: 54,
-      month: "Apr",
-    },
-    {
-      london: 57,
-      month: "May",
-    },
-    {
-      london: 60,
-      month: "June",
-    },
-    {
-      london: 59,
-      month: "July",
-    },
-    {
-      london: 65,
-      month: "Aug",
-    },
-    {
-      london: 51,
-      month: "Sept",
-    },
-    {
-      london: 60,
-      month: "Oct",
-    },
-    {
-      london: 67,
-      month: "Nov",
-    },
-    {
-      london: 61,
-      month: "Dec",
-    },
+  const [userChart, setUserChart] = useState([]);
+  const [orderChart, setOrderChart] = useState([]);
+  const { currentUser } = useSelector((state) => state.user);
+
+  const valueFormatter = (value) => `${value}orders`;
+  const months = [
+    { month: "Jan", _id: 1 },
+    { month: "Feb", _id: 2 },
+    { month: "Mar", _id: 3 },
+    { month: "Apr", _id: 4 },
+    { month: "May", _id: 5 },
+    { month: "June", _id: 6 },
+    { month: "July", _id: 7 },
+    { month: "Aug", _id: 8 },
+    { month: "Sept", _id: 9 },
+    { month: "Oct", _id: 10 },
+    { month: "Nov", _id: 11 },
+    { month: "Dec", _id: 12 },
   ];
-  const valueFormatter = (value) => `${value}mm`;
+  const TOKEN = currentUser?.access_token;
+  const getStat = async () => {
+    setPending(true);
+    try {
+      const req = await axios.get("http://localhost:4000/api/stats/users", {
+        headers: {
+          Token: `Bearer ${TOKEN}`,
+        },
+      });
+      const orderReq = await axios.get(
+        "http://localhost:4000/api/stats/orders",
+        {
+          headers: {
+            Token: `Bearer ${TOKEN}`,
+          },
+        }
+      );
+      const res = (await req).data;
+      const orderRes = (await orderReq).data;
+      setUserChart(res);
+      setOrderChart(orderRes);
+      setPending(false);
+      return res;
+    } catch (error) {
+      setPending(false);
+    }
+  };
+  useEffect(() => {
+    getStat();
+  }, []);
+
+  const missingMonth = (mock_data, months) => {
+    const mock = [...mock_data];
+
+    months.forEach((month) => {
+      const existing_month = mock.find(
+        (existing) => existing._id === month._id
+      );
+
+      if (!existing_month) {
+        mock.push({ month: month.month, _id: month._id, total: 0 });
+      } else {
+        existing_month.month = month.month;
+      }
+    });
+    mock.sort((a, b) => a._id - b._id);
+
+    return mock;
+  };
+  const orderChartData = missingMonth(orderChart, months);
   return (
-    <div>
-      <div className="flex">
-        <Box>
+    <div className="width100">
+      <div className="flex column gap1rem">
+        <Box sx={{ background: "#a1c9f1" }}>
           <Typography
             variant="h5"
             component={"h5"}
-            sx={{ textAlign: "center", mt: 3, mb: 3 }}
+            sx={{
+              textAlign: "center",
+              mb: 3,
+              background: "#6a8db3",
+              color: "#fff",
+              padding: ".5rem",
+            }}
           >
             Users chart
           </Typography>
-          <LineChart
-            xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
-            series={[
-              {
-                data: [2, 5.5, 2, 8.5, 1.5, 5],
-              },
-            ]}
-            width={500}
+          <AreaChart
+            width={650}
             height={300}
-          />
+            data={missingMonth(userChart, months)}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            style={{ fontSize: "12px" }}
+          >
+            <defs>
+              <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#8884d8" stopOpacity={0.2} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis dataKey="total" />
+            <Tooltip />
+            <Legend />
+            <Area
+              type="monotone"
+              dataKey="total"
+              stroke="#8884d8"
+              fillOpacity={1}
+              fill="url(#colorTotal)"
+            />
+          </AreaChart>
         </Box>
-        <Box>
+      </div>
+      <div className="flex gap05rem width100 mrt1rem">
+        <Box sx={{ background: "#c9f1a1", width: "50%" }}>
           <Typography
             variant="h5"
             component={"h5"}
-            sx={{ textAlign: "center", mt: 3, mb: 3 }}
+            sx={{
+              textAlign: "center",
+              mb: 3,
+              background: "#a1f1c9",
+              color: "#000",
+              padding: ".5rem",
+            }}
           >
-            Sales chart
+            Orders Line chart
           </Typography>
           <LineChart
-            xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
-            series={[
-              {
-                data: [2, 5.5, 2, 8.5, 1.5, 5],
-              },
-            ]}
             width={500}
             height={300}
+            data={orderChartData}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            style={{ fontSize: "12px" }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis dataKey="total" />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="total" stroke="#8884d8" />
+          </LineChart>
+        </Box>
+        <Box sx={{ background: "#f1a1c9", width: "50%" }}>
+          <Typography
+            variant="h5"
+            component={"h5"}
+            sx={{
+              textAlign: "center",
+              mb: 3,
+              background: "#f8bbd0",
+              color: "#000",
+              padding: ".5rem",
+            }}
+          >
+            Orders Bar Chart
+          </Typography>
+          <BarChart
+            dataset={orderChartData}
+            yAxis={[{ scaleType: "band", dataKey: "month" }]}
+            series={[{ dataKey: "total", label: "Orders", valueFormatter }]}
+            layout="horizontal"
+            {...chartSetting}
           />
         </Box>
       </div>
-      <Typography
-        variant="h5"
-        component={"h5"}
-        sx={{ textAlign: "center", mt: 3, mb: 3 }}
-      >
-        Orders Chart
-      </Typography>
-      <BarChart
-        dataset={dataset}
-        yAxis={[{ scaleType: "band", dataKey: "month" }]}
-        series={[
-          { dataKey: "london", label: "Seoul rainfall", valueFormatter },
-        ]}
-        layout="horizontal"
-        {...chartSetting}
-      />
     </div>
   );
 };

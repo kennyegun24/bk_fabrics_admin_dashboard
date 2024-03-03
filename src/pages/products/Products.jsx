@@ -1,51 +1,132 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useMemo } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { rows } from "../../data/tables_data";
+import NoRow from "../../components/NoRow";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import ItemAdded from "../../components/ItemAdded";
+import { useSelector } from "react-redux";
 
-const Products = () => {
+const Products = ({ setPending }) => {
+  const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
+  const [addItem, setAddItem] = useState(null);
+  const { currentUser } = useSelector((state) => state.user);
+
+  const TOKEN = currentUser?.access_token;
+  const deleteProduct = async (event, rowData) => {
+    event.stopPropagation();
+    setPending(true);
+    try {
+      const req = await axios.delete(
+        `http://localhost:4000/api/product/delete/${rowData._id}`,
+        {
+          headers: {
+            Token: `Bearer ${TOKEN}`,
+          },
+        }
+      );
+      setProducts((prevProducts) =>
+        prevProducts.filter((init) => init._id !== rowData._id)
+      );
+      setPending(false);
+      setAddItem("Product Deleted");
+    } catch (error) {
+      setPending(false);
+      setAddItem("Product not deleted");
+    }
+  };
   const columns = useMemo(
     () => [
       {
-        field: "first_name",
-        headerName: "First Name",
+        field: "_id",
+        headerName: "ID",
+        width: 200,
+        headerClassName: "super-app-theme--header",
+      },
+      {
+        field: "price",
+        headerName: "Price ($) ",
         width: 150,
         headerClassName: "super-app-theme--header",
       },
       {
-        field: "last_name",
-        headerName: "Last Name",
-        width: 150,
-        headerClassName: "super-app-theme--header",
-      },
-      {
-        field: "is_admin",
-        headerName: "Admin",
-        width: 100,
-        valueOptions: ["true", "false"],
+        field: "product_name",
+        headerName: "Product Name",
+        width: 250,
         editable: true,
-        type: "singleSelect",
         headerClassName: "super-app-theme--header",
       },
       {
-        field: "email",
-        headerName: "Email",
-        width: 200,
+        field: "in_stock",
+        headerName: "In Stock",
+        width: 150,
         headerClassName: "super-app-theme--header",
       },
       {
-        field: "createdAt",
-        headerName: "Created At",
-        width: 200,
+        field: "sold",
+        headerName: "Sold",
+        width: 150,
         headerClassName: "super-app-theme--header",
+      },
+      {
+        field: "rating",
+        headerName: "Ratings",
+        width: 150,
+        headerClassName: "super-app-theme--header",
+        valueGetter: (params) => params.row?.rating?.ratings || "N/A",
+      },
+      {
+        headerName: "Delete",
+        width: 150,
+        headerClassName: "super-app-theme--header",
+        renderCell: (params) => (
+          <Button
+            variant="contained"
+            onClick={(e) => deleteProduct(e, params.row)}
+          >
+            Click Me
+          </Button>
+        ),
       },
     ],
     []
   );
+  const [loading, setLoading] = useState(false);
+
+  const getAllProducts = async () => {
+    setLoading(true);
+    try {
+      const req = await axios.get(
+        `http://localhost:4000/api/product/all/admin`,
+        {
+          headers: {
+            Token: `Bearer ${TOKEN}`,
+          },
+        }
+      );
+
+      const res = req.data;
+      setProducts(res || []);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching products", error);
+    }
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    getAllProducts();
+  }, []);
+
   return (
     <div>
-      {" "}
+      {addItem &&
+        setTimeout(() => {
+          setAddItem(false);
+        }, 5000) && <ItemAdded text={addItem} />}
       <div>
         <Box
           sx={{
@@ -63,17 +144,23 @@ const Products = () => {
               mb: 3,
             }}
           >
-            Manage Users
+            Manage Products
           </Typography>
           <DataGrid
             rowsPerPageOptions={[2, 4, 5]}
             columns={columns}
-            rows={rows}
+            rows={products}
             getRowId={(row) => row._id}
             pageSizeOptions={[10, 20, 30]}
             initialState={{
               pagination: { paginationModel: { pageSize: 10 } },
             }}
+            pagination
+            slots={{ noRowsOverlay: NoRow }}
+            sx={{ "--DataGrid-overlayHeight": "300px" }}
+            autoHeight
+            onRowClick={({ row }) => navigate(`/products/${row._id}`)}
+            loading={loading}
           />
         </Box>
       </div>
