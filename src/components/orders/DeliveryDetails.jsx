@@ -16,7 +16,7 @@ const DeliveryDetails = ({ order, id, setPending }) => {
     setPending(true);
     try {
       const req = await axios.put(
-        `http://localhost:4000/api/orders/update/${id}`,
+        `https://bk-fabrics-server.vercel.app/api/orders/update/${id}`,
         {
           status: val,
           order_id: id,

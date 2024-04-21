@@ -99,11 +99,14 @@ const Order = ({ setPending }) => {
   const getOrders = async () => {
     try {
       setPending(true);
-      const req = await axios.get("http://localhost:4000/api/orders/all", {
-        headers: {
-          Token: `Bearer ${TOKEN}`,
-        },
-      });
+      const req = await axios.get(
+        "https://bk-fabrics-server.vercel.app/api/orders/all",
+        {
+          headers: {
+            Token: `Bearer ${TOKEN}`,
+          },
+        }
+      );
       const res = await req.data;
       console.log(res);
       setOrders(res);

@@ -8,7 +8,7 @@ export const loginUser = async ({ email, password }, dispatch) => {
     };
 
     const axio = axios.create({
-      baseURL: "http://localhost:4000/api/",
+      baseURL: "https://bk-fabrics-server.vercel.app/api/",
     });
     const req = await axio.post("/auth/login", body);
     const data = await req.data;
@@ -34,7 +34,7 @@ export const createAccount = async (
   try {
     dispatch(loginPending(true));
     const axio = axios.create({
-      baseURL: "http://localhost:4000/api/",
+      baseURL: "https://bk-fabrics-server.vercel.app/api/",
     });
     const req = await axio.post("/auth/register", body);
     const data = await req.data;

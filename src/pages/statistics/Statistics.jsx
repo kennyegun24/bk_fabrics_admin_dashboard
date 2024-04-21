@@ -48,13 +48,16 @@ const Statistics = ({ setPending }) => {
   const getStat = async () => {
     setPending(true);
     try {
-      const req = await axios.get("http://localhost:4000/api/stats/users", {
-        headers: {
-          Token: `Bearer ${TOKEN}`,
-        },
-      });
+      const req = await axios.get(
+        "https://bk-fabrics-server.vercel.app/api/stats/users",
+        {
+          headers: {
+            Token: `Bearer ${TOKEN}`,
+          },
+        }
+      );
       const orderReq = await axios.get(
-        "http://localhost:4000/api/stats/orders",
+        "https://bk-fabrics-server.vercel.app/api/stats/orders",
         {
           headers: {
             Token: `Bearer ${TOKEN}`,

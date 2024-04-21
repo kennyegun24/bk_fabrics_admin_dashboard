@@ -16,7 +16,7 @@ export const createProduct = async (
 ) => {
   try {
     const req = await axios.post(
-      "http://localhost:4000/api/product/create",
+      "https://bk-fabrics-server.vercel.app/api/product/create",
       {
         product_name,
         product_desc,

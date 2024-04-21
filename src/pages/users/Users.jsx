@@ -52,11 +52,14 @@ const Users = ({ setPending }) => {
   const getAllUsers = async () => {
     setPending(true);
     try {
-      const req = await axios.get(`http://localhost:4000/api/stats`, {
-        headers: {
-          Token: `Bearer ${TOKEN}`,
-        },
-      });
+      const req = await axios.get(
+        `https://bk-fabrics-server.vercel.app/api/stats`,
+        {
+          headers: {
+            Token: `Bearer ${TOKEN}`,
+          },
+        }
+      );
 
       const res = req.data;
       setUsers(res || []);

@@ -20,7 +20,7 @@ const Products = ({ setPending }) => {
     setPending(true);
     try {
       const req = await axios.delete(
-        `http://localhost:4000/api/product/delete/${rowData._id}`,
+        `https://bk-fabrics-server.vercel.app/api/product/delete/${rowData._id}`,
         {
           headers: {
             Token: `Bearer ${TOKEN}`,
@@ -99,7 +99,7 @@ const Products = ({ setPending }) => {
     setLoading(true);
     try {
       const req = await axios.get(
-        `http://localhost:4000/api/product/all/admin`,
+        `https://bk-fabrics-server.vercel.app/api/product/all/admin`,
         {
           headers: {
             Token: `Bearer ${TOKEN}`,

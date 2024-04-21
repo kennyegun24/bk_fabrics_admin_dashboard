@@ -19,11 +19,14 @@ const Product_id = ({ setPending }) => {
   const getProduct = async () => {
     setPending(true);
     try {
-      const req = await axios.get(`http://localhost:4000/api/product/${id}`, {
-        headers: {
-          Token: `Bearer ${TOKEN}`,
-        },
-      });
+      const req = await axios.get(
+        `https://bk-fabrics-server.vercel.app/api/product/${id}`,
+        {
+          headers: {
+            Token: `Bearer ${TOKEN}`,
+          },
+        }
+      );
       const res = await req.data;
       setProduct(res);
       setPending(false);
@@ -37,7 +40,7 @@ const Product_id = ({ setPending }) => {
       setPending(true);
       try {
         const req = await axios.put(
-          `http://localhost:4000/api/product/update/${id}`,
+          `https://bk-fabrics-server.vercel.app/api/product/update/${id}`,
           {
             ...updatedProduct,
           },
