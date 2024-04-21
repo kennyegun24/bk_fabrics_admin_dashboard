@@ -10,9 +10,16 @@ import axios from "axios";
 
 // CREATE PRODUCT
 export const createProduct = async (
-  { product_name, product_desc, price, in_stock, product_image, TOKEN },
-  setAddItem,
-  categories
+  {
+    product_name,
+    product_desc,
+    price,
+    in_stock,
+    product_image,
+    TOKEN,
+    categories,
+  },
+  setAddItem
 ) => {
   try {
     const req = await axios.post(

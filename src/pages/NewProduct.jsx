@@ -15,14 +15,22 @@ const NewProduct = ({ pending, setPending }) => {
     product_desc: "",
     price: "",
     in_stock: "",
-    categories: ["Shirt", "Shoes"],
+    categories: [],
   });
   const [error, setError] = useState(null);
   const handleChange = (e) => {
-    setItems((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    if (e.target.name === "categories") {
+      setItems((prev) => ({
+        ...prev,
+        categories: [e.target.value],
+      }));
+    } else {
+      setItems((prev) => ({
+        ...prev,
+
+        [e.target.name]: e.target.value,
+      }));
+    }
   };
   const { currentUser } = useSelector((state) => state.user);
   // console.log(currentUser);
@@ -168,7 +176,7 @@ const NewProduct = ({ pending, setPending }) => {
             <input
               className="edit_product_input"
               type="text"
-              name=""
+              name="categories"
               id="product_cat"
             />
             {error?.product_category &&
