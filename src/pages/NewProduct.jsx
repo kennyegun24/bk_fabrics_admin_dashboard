@@ -7,6 +7,7 @@ import { createProduct } from "../redux/products";
 import axios from "axios";
 import Loader from "../components/Loader";
 import { useSelector } from "react-redux";
+import AddShippingFee from "./AddShippingFee";
 const NewProduct = ({ pending, setPending }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [addItem, setAddItem] = useState(null);
@@ -121,138 +122,143 @@ const NewProduct = ({ pending, setPending }) => {
   };
   console.log(error);
   return (
-    <div className="create_product_container">
-      {addItem &&
-        setTimeout(() => {
-          setAddItem(false);
-        }, 5000) && <ItemAdded text={addItem} />}
-      <form
-        onChange={(e) => handleChange(e)}
-        className="create_product flex column gap1rem"
-      >
-        <h2 className="edtit_header">Create New Product</h2>
-        <label htmlFor="upload_image" className="add_prod_image_container">
-          {selectedImage ? (
-            <img
-              src={URL.createObjectURL(selectedImage)}
-              className="add_product_image"
-              alt=""
-            />
-          ) : (
-            <img src={image} className="add_product_image" alt="" />
-          )}
-          <div className="cam_container flex align_center justify_center">
-            <CiCamera size={24} className="cam_icon" />
-          </div>
-        </label>
-        <input
-          type="file"
-          className="hide_field"
-          name=""
-          id="upload_image"
-          accept="image/*"
-          onChange={(e) => setSelectedImage(e.target.files[0])}
-        />
-        <div className="flex justify_between">
-          <div style={{ width: "45%" }} className="flex column gap03rem">
-            <label htmlFor="product_name">Product Name</label>
-
-            <input
-              className="edit_product_input"
-              type="text"
-              name="product_name"
-              id="product_name"
-            />
-            {error?.product_name &&
-              setTimeout(() => {
-                setError(null);
-              }, 5000) && (
-                <span className="error_text">{error?.product_name}</span>
-              )}
-          </div>
-          <div style={{ width: "45%" }} className="flex column gap03rem">
-            <label htmlFor="product_name">Product Category</label>
-
-            <input
-              className="edit_product_input"
-              type="text"
-              name="categories"
-              id="product_cat"
-            />
-            {error?.product_category &&
-              setTimeout(() => {
-                setError(null);
-              }, 5000) && (
-                <span className="error_text">{error?.product_category}</span>
-              )}
-          </div>
-        </div>
-        <div className="flex column gap03rem">
-          <label htmlFor="product_name">Product Desc</label>
-
-          <textarea
-            className="edit_product_desc"
-            type="text"
-            name="product_desc"
-            id="product_desc"
-          />
-          {error?.product_desc &&
-            setTimeout(() => {
-              setError(null);
-            }, 5000) && (
-              <span className="error_text">{error?.product_desc}</span>
+    <div className="new_products_fee_container">
+      <div className="create_product_container">
+        {addItem &&
+          setTimeout(() => {
+            setAddItem(false);
+          }, 5000) && <ItemAdded text={addItem} />}
+        <form
+          onChange={(e) => handleChange(e)}
+          className="create_product flex column gap1rem"
+        >
+          <h2 className="edtit_header">Create New Product</h2>
+          <label htmlFor="upload_image" className="add_prod_image_container">
+            {selectedImage ? (
+              <img
+                src={URL.createObjectURL(selectedImage)}
+                className="add_product_image"
+                alt=""
+              />
+            ) : (
+              <img src={image} className="add_product_image" alt="" />
             )}
-        </div>
-        <div className="flex justify_between">
-          <div style={{ width: "45%" }} className="flex column gap03rem">
-            <label htmlFor="">Price</label>
-            <input
-              className="edit_product_input"
-              type="number"
-              name="price"
-              id="product_price"
+            <div className="cam_container flex align_center justify_center">
+              <CiCamera size={24} className="cam_icon" />
+            </div>
+          </label>
+          <input
+            type="file"
+            className="hide_field"
+            name=""
+            id="upload_image"
+            accept="image/*"
+            onChange={(e) => setSelectedImage(e.target.files[0])}
+          />
+          <div className="flex justify_between">
+            <div style={{ width: "45%" }} className="flex column gap03rem">
+              <label htmlFor="product_name">Product Name</label>
+
+              <input
+                className="edit_product_input"
+                type="text"
+                name="product_name"
+                id="product_name"
+              />
+              {error?.product_name &&
+                setTimeout(() => {
+                  setError(null);
+                }, 5000) && (
+                  <span className="error_text">{error?.product_name}</span>
+                )}
+            </div>
+            <div style={{ width: "45%" }} className="flex column gap03rem">
+              <label htmlFor="product_name">Product Category</label>
+
+              <input
+                className="edit_product_input"
+                type="text"
+                name="categories"
+                id="product_cat"
+              />
+              {error?.product_category &&
+                setTimeout(() => {
+                  setError(null);
+                }, 5000) && (
+                  <span className="error_text">{error?.product_category}</span>
+                )}
+            </div>
+          </div>
+          <div className="flex column gap03rem">
+            <label htmlFor="product_name">Product Desc</label>
+
+            <textarea
+              className="edit_product_desc"
+              type="text"
+              name="product_desc"
+              id="product_desc"
             />
-            {error?.price &&
+            {error?.product_desc &&
               setTimeout(() => {
                 setError(null);
-              }, 5000) && <span className="error_text">{error?.price}</span>}
+              }, 5000) && (
+                <span className="error_text">{error?.product_desc}</span>
+              )}
+          </div>
+          <div className="flex justify_between">
+            <div style={{ width: "45%" }} className="flex column gap03rem">
+              <label htmlFor="">Price</label>
+              <input
+                className="edit_product_input"
+                type="number"
+                name="price"
+                id="product_price"
+              />
+              {error?.price &&
+                setTimeout(() => {
+                  setError(null);
+                }, 5000) && <span className="error_text">{error?.price}</span>}
+            </div>
+
+            <div style={{ width: "45%" }} className="flex column gap03rem">
+              <label htmlFor="">Price off</label>
+              <input
+                className="edit_product_input"
+                type="number"
+                name=""
+                id="product_price_percentage"
+              />
+            </div>
           </div>
 
-          <div style={{ width: "45%" }} className="flex column gap03rem">
-            <label htmlFor="">Price off</label>
+          <div className="flex column gap03rem">
+            <label htmlFor="">Stock</label>
+
             <input
               className="edit_product_input"
               type="number"
-              name=""
-              id="product_price_percentage"
+              name="in_stock"
+              id="product_stock"
             />
+            {error?.in_stock &&
+              setTimeout(() => {
+                setError(null);
+              }, 5000) && <span className="error_text">{error?.in_stock}</span>}
           </div>
-        </div>
-
-        <div className="flex column gap03rem">
-          <label htmlFor="">Stock</label>
-
-          <input
-            className="edit_product_input"
-            type="number"
-            name="in_stock"
-            id="product_stock"
-          />
-          {error?.in_stock &&
-            setTimeout(() => {
-              setError(null);
-            }, 5000) && <span className="error_text">{error?.in_stock}</span>}
-        </div>
-        <div className="buttons">
-          <button
-            disabled={pending}
-            className={`edit_order_status_btn ${pending && "disable"}`}
-            onClick={!pending && submit}
-          >
-            Done
-          </button>
-        </div>
-      </form>
+          <div className="buttons">
+            <button
+              disabled={pending}
+              className={`edit_order_status_btn ${pending && "disable"}`}
+              onClick={!pending && submit}
+            >
+              Done
+            </button>
+          </div>
+        </form>
+      </div>
+      <div className="add_shipping_fee">
+        <AddShippingFee />
+      </div>
     </div>
   );
 };
