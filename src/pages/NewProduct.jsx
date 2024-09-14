@@ -117,7 +117,6 @@ const NewProduct = ({ pending, setPending }) => {
         "base64"
       );
     }
-    console.log(validationError);
     setError(validationError);
   };
   console.log(error);

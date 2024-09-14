@@ -4,16 +4,8 @@ import { Select, Input, Form } from "antd";
 import { countries } from "../countries"; // Assuming this is a static list of countries
 import { createModifyShippingCost } from "../redux/products";
 import { useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
 
 const AddShippingFee = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm();
   const { currentUser } = useSelector((state) => state.user);
   const [addItem, setAddItem] = useState(false);
   const [countryCode, setCountryCode] = useState({

@@ -108,7 +108,6 @@ const Order = ({ setPending }) => {
         }
       );
       const res = await req.data;
-      console.log(res);
       setOrders(res);
       setPending(false);
     } catch (error) {
@@ -119,7 +118,6 @@ const Order = ({ setPending }) => {
     setPending(true);
     getOrders();
   }, []);
-  console.log(orders);
   return (
     <div>
       <div>

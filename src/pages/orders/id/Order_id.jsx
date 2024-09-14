@@ -27,12 +27,10 @@ const Order_id = ({ setPending }) => {
       const res = await req.data;
       setOrder(res);
       setPending(false);
-      console.log(res);
     } catch (error) {
       setPending(false);
     }
   };
-  console.log(order);
   const skjask = "65a7c70cad7688f78805253d";
   // const parsedDate = new Date(order?.createdAt);
   // const newDate = addDays(parsedDate, 3);

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 // Login as admin
 export const loginUser = async ({ email, password }, dispatch) => {
   try {

@@ -63,7 +63,6 @@ const Product_id = ({ setPending }) => {
       setPending(false);
     }
   };
-  console.log(updatedProduct);
   useEffect(() => {
     getProduct();
   }, []);

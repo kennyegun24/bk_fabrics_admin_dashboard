@@ -51,7 +51,7 @@ export const createModifyShippingCost = async (
   alert(TOKEN);
   try {
     const req = await axios.post(
-      "http://localhost:4000/api/shipping/new-fees",
+      "https://bk-fabrics-server.vercel.app/api/shipping/new-fees",
       {
         country,
         stateName,
