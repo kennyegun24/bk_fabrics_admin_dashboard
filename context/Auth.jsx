@@ -2,34 +2,39 @@
 import { logout } from "@/redux/user";
 import { useRouter } from "next/navigation";
 import { createContext, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { currentUser, loginDate } = useSelector((state) => state.user);
-  function isMoreThanThreeDaysAgo(dateString) {
+
+  const isMoreThanThreeDaysAgo = (dateString) => {
     const givenDate = new Date(dateString);
     const currentDate = new Date();
     const timeDifference = currentDate - givenDate;
     const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
     return daysDifference > 3;
-  }
+  };
+
   useEffect(() => {
-    console.log(currentUser);
-    console.log(loginDate);
-    if (currentUser?.access_token) {
-      if (isMoreThanThreeDaysAgo(loginDate)) {
-        console.log("more");
-        logout();
-        router.push("/login");
-        return;
-      }
-      return router.push("/");
-    } else {
+    if (!currentUser || !currentUser.access_token) {
       router.push("/login");
+      return;
     }
-  }, [currentUser, loginDate]);
-  return <AuthContext.Provider>{children}</AuthContext.Provider>;
+
+    if (isMoreThanThreeDaysAgo(loginDate)) {
+      dispatch(logout());
+      router.push("/login");
+      return;
+    }
+  }, [currentUser, loginDate, router, dispatch]);
+
+  return (
+    <AuthContext.Provider value={{ currentUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
