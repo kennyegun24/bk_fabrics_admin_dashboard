@@ -9,19 +9,20 @@ import { toastError, toastSuccess } from "@/libs/sonner";
 import { toast } from "sonner";
 import { createProduct } from "@/redux/products";
 
-const beforeUpload = (file) => {
+const beforeUpload = (messageApi, file) => {
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
   if (!isJpgOrPng) {
-    message.error("You can only upload JPG/PNG file!");
+    messageApi.error("You can only upload JPG/PNG file!");
   }
   const isLt2M = file.size / 1024 / 1024 < 2;
   if (!isLt2M) {
-    message.error("Image must smaller than 2MB!");
+    messageApi.error("Image must smaller than 2MB!");
   }
   return isJpgOrPng && isLt2M;
 };
 
 const Page = () => {
+  const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const [imageFile, setImageFile] = useState(null);
@@ -63,10 +64,10 @@ const Page = () => {
       const imageUrl = response.data.secure_url;
       setImageUrl(imageUrl);
       setLoading(false);
-      message.success("Upload successful!");
+      // message.success("Upload successful!");
     } catch (error) {
       setLoading(false);
-      message.error("Upload failed!");
+      // message.error("Upload failed!");
       console.error("Error uploading image:", error);
     }
   };
@@ -136,6 +137,7 @@ const Page = () => {
 
   return (
     <div className="new_form_container">
+      {contextHolder}
       <Form onFinish={submit}>
         <h1>Add new product</h1>
         <hr />
@@ -277,7 +279,7 @@ const Page = () => {
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                beforeUpload={beforeUpload}
+                beforeUpload={(e) => beforeUpload(messageApi, e)}
                 onChange={handleImageChange}
               >
                 {imageUrl ? (

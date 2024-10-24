@@ -33,6 +33,11 @@ export const ThemeProvider = ({ children }) => {
             Upload: {
               actionsColor: "#fff",
             },
+            Message: {
+              colorText: "#fff",
+              contentBg: "#000",
+              contentPadding: "0.3rem",
+            },
           },
         }}
       >
