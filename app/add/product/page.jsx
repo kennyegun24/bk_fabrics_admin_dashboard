@@ -259,7 +259,7 @@ const Page = () => {
                 layout="vertical"
               >
                 <Input
-                  type="number"
+                  type="numbtexter"
                   placeholder="Product Category"
                   value={items.in_stock}
                   name="categories"
