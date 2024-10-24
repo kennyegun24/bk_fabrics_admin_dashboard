@@ -89,8 +89,8 @@ const Login = ({ setPathName }) => {
           </button>
         </section>
         <p className="login_long_text">
-          By creating an account, you agree to BK' Fabrics Conditions of Use and
-          Privacy Notice.
+          By creating an account, you agree to BK&apos; Fabrics Conditions of
+          Use and Privacy Notice.
         </p>
         <hr />
       </div>
