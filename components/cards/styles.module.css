@@ -1,0 +1,50 @@
+.sales_card {
+  padding: 1.7rem;
+  background: #1b232d;
+  width: 32%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  color: #d5d5d5;
+  border-radius: 9px;
+  border: 1px solid #404040;
+
+  .card_header {
+    font-size: 14px;
+  }
+
+  .card_price {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .text {
+    font-size: 11px;
+    color: #738791;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .prog_bar {
+    height: 7px;
+    border-radius: 6px;
+    width: 100%;
+    position: relative;
+    background-color: #1d2630;
+
+    .prog_bar_color {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 77%;
+      height: 7px;
+      border-radius: 6px;
+      background: #0398f2;
+    }
+  }
+}
+
+.sales_card * {
+  background: transparent;
+}

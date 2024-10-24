@@ -1,0 +1,27 @@
+.other_cards_container {
+  padding: 2rem;
+  background: #1b232d;
+  border-radius: 9px;
+  border: 1px solid #404040;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  * {
+    background: transparent;
+  }
+
+  p {
+    color: #738791;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 14px;
+    /* color: #22c63d; */
+  }
+
+  :nth-child(2) {
+    font-size: 20px;
+    color: #fff;
+  }
+}

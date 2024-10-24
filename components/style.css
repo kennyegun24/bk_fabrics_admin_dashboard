@@ -1,0 +1,148 @@
+.settings_container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  bottom: 0;
+  height: 100vh;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.settings_content_container {
+  width: 23%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 2rem 1.5rem;
+  color: #d1d3d4;
+  background: #19212a;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: absolute;
+  top: 0;
+  * {
+    background: transparent;
+  }
+}
+
+.settings_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  padding: 0 0 2rem 0;
+  background: #19212a;
+
+  > div:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid #c32323;
+  }
+}
+
+.settings_content_div {
+  background: #1b232d;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  > section {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #232d38;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .settings_body {
+      display: flex;
+      gap: 1rem;
+
+      > section {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        padding: 0.5rem;
+        > div {
+          display: flex;
+          align-items: center;
+          gap: 0.7rem;
+          font-size: 12px;
+          width: 100%;
+
+          input {
+            /* padding: 10px; */
+            width: 15px;
+            height: 15px;
+          }
+        }
+        .settings_img {
+          width: 100%;
+          object-fit: cover;
+          border-radius: 6px;
+          border: 1px solid #728690;
+          height: 50px;
+        }
+      }
+    }
+  }
+}
+
+.settings_content_header {
+  h5 {
+    font-size: 13px;
+  }
+
+  p {
+    margin-top: 0.3rem;
+    color: #728690;
+    font-size: 12px;
+  }
+}
+
+.hide_settings {
+  right: -100%;
+}
+
+.show_settings {
+  right: 0;
+}
+
+.time_show {
+  transition: 0.3s ease-in-out all;
+}
+
+.time_hide {
+  transition: 0.3s ease-in-out all;
+}
+
+.time_delay_hide {
+  transition-delay: 0.3s;
+}
+
+.selected_setting {
+  border: 2px solid #02abff;
+  border-radius: 7px;
+}
+
+.settings_content_container::-webkit-scrollbar {
+  width: 5px;
+  background: transparent;
+}
+
+.settings_content_container::-webkit-scrollbar-thumb {
+  background: #d1d3d4;
+  border-radius: 9px;
+}
+
+.settings_close_div {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > svg {
+    cursor: pointer;
+  }
+}

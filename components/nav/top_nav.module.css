@@ -1,0 +1,126 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background: transparent;
+  padding: 0 2rem;
+
+  .sub_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    width: 100%;
+
+    .search_container {
+      background: transparent;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      & > svg {
+        cursor: pointer;
+      }
+      .input_container {
+        display: flex;
+        gap: 0.5rem;
+        background: #263240;
+        align-items: center;
+        padding: 0.5rem;
+        border-radius: 9px;
+
+        .search_input {
+          padding: 0.3rem;
+          border: none;
+          outline: none;
+          color: #fff;
+
+          &::placeholder {
+            color: #bfbfbf;
+          }
+        }
+      }
+
+      .img {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        background: #fff;
+      }
+
+      .light_mode_div {
+        position: relative;
+        background: transparent;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & > svg {
+          cursor: pointer;
+          background: transparent;
+        }
+
+        & > div {
+          position: absolute;
+          top: 30px;
+          left: -150px;
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          height: auto;
+          background: #263240;
+          padding: 1rem;
+          width: 150px;
+          border-radius: 9px;
+          & > p {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 13px;
+            color: #9d9d9d;
+            background: transparent;
+          }
+        }
+      }
+
+      .gear_container {
+        height: 45px;
+        width: 45px;
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #19212a;
+        cursor: pointer;
+
+        & > svg {
+          animation: rotate infinite linear 4s;
+        }
+      }
+    }
+  }
+
+  .tab_text {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    color: #bfbfbf;
+    background: transparent;
+  }
+}
+.search_container *,
+.sub_container,
+.sub_container *,
+.tab_text,
+.tab_text * {
+  background: transparent;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

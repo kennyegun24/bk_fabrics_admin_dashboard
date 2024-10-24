@@ -1,0 +1,26 @@
+.container {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .dashboard_sales_cards {
+    display: grid;
+    align-items: center;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  .metricCards {
+    display: flex;
+    justify-content: space-between;
+
+    .user_card_container {
+      width: 58%;
+    }
+
+    .sales_ilnes_container {
+      width: 40%;
+    }
+  }
+}

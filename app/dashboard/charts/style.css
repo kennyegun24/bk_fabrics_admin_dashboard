@@ -1,0 +1,51 @@
+.order_chart {
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.order_chart_component {
+  width: 47%;
+  .order_chart_sub_component {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+
+    > h3 {
+      color: #cececf;
+      font-size: 13px;
+      font-weight: 500;
+      position: sticky;
+      top: 0;
+    }
+
+    .select_container {
+      position: relative;
+      width: 150px;
+      > select {
+        padding: 0.35rem;
+        color: #fff;
+        background: #131920;
+        appearance: none;
+        width: 100%;
+
+        * {
+          padding: 0.5rem;
+        }
+      }
+
+      option {
+        background-color: #283442;
+      }
+
+      > svg {
+        position: absolute;
+        color: #fff;
+        top: 50%;
+        right: 5px;
+        transform: translateY(-50%);
+        font-size: 14px;
+      }
+    }
+  }
+}
