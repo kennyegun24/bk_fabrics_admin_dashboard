@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "./auth.css";
 // import { Link } from "react-router-dom";
-import logo from "@/public/logo.jpg";
+import logo from "@/public/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../redux/apiCalls";
 import Link from "next/link";

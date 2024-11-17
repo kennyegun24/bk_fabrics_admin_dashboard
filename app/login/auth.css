@@ -87,6 +87,16 @@
   font-size: 12px;
 }
 
+.red {
+  color: red;
+}
+
+.logo {
+  height: 100px;
+  width: 25%;
+  object-fit: contain;
+}
+
 @media (min-width: 767px) and (max-width: 1024px) {
   .auth_container_sm {
     width: 50%;

@@ -18,6 +18,7 @@ export const loginUser = async ({ email, password }, dispatch) => {
     });
     const req = await axio.post("/auth/login", body);
     const data = await req.data;
+    alert("success");
     dispatch(loginSuccess(await data));
   } catch (error) {
     dispatch(loginFailure(true));

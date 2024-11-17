@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }) => {
       router.push("/login");
       return;
     }
+    return router.push("/");
   }, [currentUser, loginDate, router, dispatch]);
 
   return (
