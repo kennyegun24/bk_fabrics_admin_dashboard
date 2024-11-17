@@ -105,7 +105,7 @@ const Nav = () => {
   };
   return (
     <nav className={styles.container}>
-      <h1 className={styles.nav_header}>Welcome Boss!</h1>
+      <h1 className={styles.nav_header}>BK Fabrics!</h1>
 
       {widgets.map((widget, _) => (
         <div key={_} className={styles.navigation_container}>
