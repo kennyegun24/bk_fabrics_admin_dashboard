@@ -12,7 +12,7 @@ const SalesLines = ({ total }) => {
           <BsCash color="#069DE3" />
         </div>
         <p>
-          Earnings so far <span>${total}</span>
+          Earnings so far <span>₵{total}</span>
         </p>
       </div>
     </div>
